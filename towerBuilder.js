@@ -20,12 +20,36 @@ function towerBuilder(nFloors) {
 
   if (nFloors === 1){return output}
 
+  //this builds the basic floors
+
+  let maxFloorLength = nFloors*2-1;
+  // console.log("maxFloorLength>>",maxFloorLength);
+
   for (let i=2;i<=nFloors;i++ ){
     let newFloor = output[i-2]+"**";
+
+    // console.log("spacesNeededEachSide>>>",spacesNeededEachSide);
+
+    if (i !== nFloors){
+      const spacesNeededEachSide = (maxFloorLength - newFloor.length)/2;
+      console.log("newFloor before>>>",newFloor);
+
+      console.log("spacesNeededEachSide>>>",spacesNeededEachSide);
+
+      // newFloor = " ".repeat(spacesNeededEachSide)+newFloor+" ".repeat(spacesNeededEachSide);
+      newFloor = " ".repeat(spacesNeededEachSide)+newFloor;
+      // newFloor = newFloor+" ".repeat(spacesNeededEachSide)
+      console.log("newFloor after >>>",newFloor);
+      console.log("after spacesNeededEachSide>>>",spacesNeededEachSide);
+    }
+
+
     output.push(newFloor)
   }
 
-  output[0] = " * ";
+  const lastEntryLength = output[output.length-1].length;
+  console.log("before --> this is output>>>>",output);
+
   return output
 }
 
@@ -33,9 +57,6 @@ function towerBuilder(nFloors) {
 // towerBuilder(2) ==> [" * ","***"];
 // towerBuilder(3) ==> ["  *  "," *** ","*****"];
 
-// console.log(towerBuilder(1))
-// console.log(towerBuilder(2))
-// console.log(towerBuilder(3))
 console.log(towerBuilder(4))
-console.log(towerBuilder(5))
-console.log(towerBuilder(6))
+// console.log(towerBuilder(5))
+// console.log(towerBuilder(6))
