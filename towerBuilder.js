@@ -1,13 +1,10 @@
 'use strict';
 
 // Build Tower
-
 // Build Tower by the following given argument:
 // number of floors (integer and always greater than 0).
 
 // Tower block is represented as *
-
-
 // for example, a tower of 3 floors looks like below
 //[
 //   '  *  ',
@@ -17,38 +14,43 @@
 
 function towerBuilder(nFloors) {
   let output = ["*"];
+  const maxFloorLength = (nFloors*2)-1;
 
-  if (nFloors === 1){return output}
+  for (let i =1;i<nFloors;i++){
+    let newFloor = output[i-1]+"**";
+    let spaceDiff = 1+(maxFloorLength - newFloor.length)/2;
 
-  //this builds the basic floors
+    // const copy = spaceDiff;
+    // let spaces = returnSpaces(spaceDiff);
+    // let spaces2 = returnSpaces(copy);
+    //
+    // //repeat doesn't work because of returning invalid count value!!!
+    // newFloor = spaces+newFloor+spaces2;
 
-  let maxFloorLength = nFloors*2-1;
-  // console.log("maxFloorLength>>",maxFloorLength);
-
-  for (let i=2;i<=nFloors;i++ ){
-    let newFloor = output[i-2]+"**";
-
-    // console.log("spacesNeededEachSide>>>",spacesNeededEachSide);
-
-    if (i !== nFloors){
-      const spacesNeededEachSide = (maxFloorLength - newFloor.length)/2;
-      console.log("newFloor before>>>",newFloor);
-
-      console.log("spacesNeededEachSide>>>",spacesNeededEachSide);
-
-      // newFloor = " ".repeat(spacesNeededEachSide)+newFloor+" ".repeat(spacesNeededEachSide);
-      newFloor = " ".repeat(spacesNeededEachSide)+newFloor;
-      // newFloor = newFloor+" ".repeat(spacesNeededEachSide)
-      console.log("newFloor after >>>",newFloor);
-      console.log("after spacesNeededEachSide>>>",spacesNeededEachSide);
-    }
-
-
-    output.push(newFloor)
+    output.push(newFloor);
   }
 
-  const lastEntryLength = output[output.length-1].length;
-  console.log("before --> this is output>>>>",output);
+  function returnSpaces(integer){
+    return " ".repeat(integer);
+  }
+
+  // for (let i=2;i<=nFloors;i++ ){
+  //   let newFloor = output[i-2]+"**";
+  //   console.log("maxFloorLength>>>",maxFloorLength);
+  //   console.log("newFloor.length>>>",newFloor.length);
+  //   let spacesNeededEachSide = (maxFloorLength - newFloor.length)/2;
+  //   console.log("spacesNeededEachSide>>>",spacesNeededEachSide);
+  //
+  //   if (i !== nFloors){
+  //     let spaces = " ".repeat(spacesNeededEachSide);
+  //
+  //     // newFloor = " ".repeat(spacesNeededEachSide)+newFloor+" ".repeat(copy);
+  //     newFloor = spaces+newFloor+spaces;
+  //   }
+  //   // console.log("output before",output);
+  //   output.push(newFloor)
+  //   // console.log("output after",output);
+  // }
 
   return output
 }
@@ -57,6 +59,7 @@ function towerBuilder(nFloors) {
 // towerBuilder(2) ==> [" * ","***"];
 // towerBuilder(3) ==> ["  *  "," *** ","*****"];
 
-console.log(towerBuilder(4))
+console.log(towerBuilder(3))
+// console.log(towerBuilder(4))
 // console.log(towerBuilder(5))
 // console.log(towerBuilder(6))
