@@ -27,12 +27,44 @@
 // More about roman numerals - http://en.wikipedia.org/wiki/Roman_numerals
 
 function solution(number){
-  // convert the number to a roman numeral
+  let output = "";
+  const numArr = (number.toString()).split('');
+  const totalDigits = numArr.length-1;
+
+  const romanNumeralObj = {
+    "1":"I",
+    "5":"V",
+    "10":"X",
+    "50":"L",
+    "100":"C",
+    "500":"D",
+    "1000":"M"
+  };
+
+  numArr.forEach(function(leftmostDigit,index){
+    let trailingZeros = "0".repeat(totalDigits-index);
+    leftmostDigit = (leftmostDigit+trailingZeros).toString();
+
+    // console.log("trailingZeros>>",trailingZeros);
+    // console.log("index>>",index);
+    console.log("leftmostDigit>>",leftmostDigit);
+    console.log("leftmostDigit>>",typeof leftmostDigit);
+
+    //this is not currently pathing in correct
+    //but the basic plan is to decompose these input numbers
+    //one decimal place at a time
+    
+    if ( romanNumeralObj[leftmostDigit] ) {
+      output+=romanNumeralObj[leftmostDigit]
+    }
 
 
+  })
+  // console.log("hello!");
 
+  return output;
 }
 
-solution(1666)
+solution(1666) //==> MDCLXVI
 // solution(1990)
 // solution(2008)
