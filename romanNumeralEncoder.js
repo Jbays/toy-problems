@@ -44,27 +44,32 @@ function solution(number){
   numArr.forEach(function(leftmostDigit,index){
     let trailingZeros = "0".repeat(totalDigits-index);
     leftmostDigit = (leftmostDigit+trailingZeros).toString();
-
     // console.log("trailingZeros>>",trailingZeros);
     // console.log("index>>",index);
-    console.log("leftmostDigit>>",leftmostDigit);
-    console.log("leftmostDigit>>",typeof leftmostDigit);
 
     //this is not currently pathing in correct
     //but the basic plan is to decompose these input numbers
     //one decimal place at a time
-    
-    if ( romanNumeralObj[leftmostDigit] ) {
-      output+=romanNumeralObj[leftmostDigit]
-    }
+
+    //this all needs to happen in an orderly fashion
+    //decimal place by decimal place is probably best
+
+    (Object.keys(romanNumeralObj).reverse()).forEach(function(romNumKey){
+      console.log("this is romNumKey",romNumKey);
+      // if ( romanNumeralObj[leftmostDigit] ) {
+      //   output+=romanNumeralObj[leftmostDigit]
+      // } else {
+      //   console.log("       leftmostDigit>>",leftmostDigit);
+      //   console.log("typeof leftmostDigit>>",typeof leftmostDigit);
+      // }
+    })
+
 
 
   })
-  // console.log("hello!");
-
-  return output;
+  return "This is output>>>> "+output;
 }
 
-solution(1666) //==> MDCLXVI
+console.log(solution(1666)) //==> MDCLXVI
 // solution(1990)
 // solution(2008)
