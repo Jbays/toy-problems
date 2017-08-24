@@ -18,56 +18,51 @@
 // console.log(countSmileys([';D', ':-(', ':-)', ';~)']));     // should return 3;
 // console.log(countSmileys([';]', ':[', ';*', ':$', ';-D'])); // should return 1;
 
-// these are all the tests not working
-// Expected: 2, instead got: 5
-// Testing for: ;~) , :> , :o) , ;~> , ;o> , :D , :>
-// Expected: 2, instead got: 3
-// Testing for: :D , ;) , :~) , ;-) , ;> , :( , :>
-// Expected: 3, instead got: 4
-// Testing for: :-> , :-) , :o) , :-> , :~D , :o> , :oD
-// Expected: 2, instead got: 4
-// Testing for: :~> , ;~) , :> , ;~( , ;) , :o( , :oD
-// Expected: 2, instead got: 3
-// Testing for: ;-) , :D , :( , ;oD , :D , :o> , :o>
-// Expected: 3, instead got: 4
-// Testing for: :D , :) , ;) , ;) , :~( , :( , ;~)
-// Expected: 3, instead got: 5
-// Testing for: ;> , ;) , :~> , ;) , ;oD , :> , :>
-// Expected: 2, instead got: 3
-// Testing for: ;~D , :) , ;D , :( , ;D , ;~> , :)
-
-
 //return the total number of smiling faces in the array
 function countSmileys(arr) {
   let count = 0;
 
   arr.forEach((faceString)=>{
     let eyes = false;
-    let nose = false;
     let mouth = false;
-    let splitFace = faceString.split('');
+    let faceInvalid = false;
+    let splitFace = faceString.split('').slice(0,3);
 
-    splitFace.forEach((singleFaceSymbol)=>{
-      if ( singleFaceSymbol === ";" ||
-           singleFaceSymbol === ":" ){
-        eyes = true;
-      }
+    //handles the simplest case
+    if ( splitFace.length === 2 ) {
+      splitFace.forEach((faceSymbol)=>{
+        if ( faceSymbol === ";" ||
+             faceSymbol === ":" ){
+          eyes = true;
+        }
 
-      if ( singleFaceSymbol === "-" ||
-           singleFaceSymbol === "~" ){
-        nose = true;
-      }
+        if ( faceSymbol === ")" ||
+             faceSymbol === "D" ){
+          mouth = true;
+        }
+      })
+      if ( eyes && mouth ) count++;
+    } else if ( splitFace.length === 3 ) {
+      //handle the specific case for three-symbol faces
+        if ( splitFace[0] === ";" ||
+             splitFace[0] === ":" ){
+          eyes = true;
+        }
 
-      if ( singleFaceSymbol === ")" ||
-           singleFaceSymbol === "D" ){
-        mouth = true;
-      }
-    })
+        if ( splitFace[1] === "-" ||
+             splitFace[1] === "~" ){
+          nose = true;
+        } else {
+          faceInvalid = true;
+        }
 
-    if ( eyes && nose && mouth ) {
-      count++;
+        if ( splitFace[2] === ")" ||
+             splitFace[2] === "D" ){
+          mouth = true;
+        }
+
+        if ( !faceInvalid && eyes && mouth ) count++;
     }
   })
-
   return count;
 }
