@@ -11,20 +11,17 @@
 // More examples in the test cases. All input will be lower case letters and in some cases spaces.
 
 function solve(str){
-  let spaceLoc = [];
-
-  //can probably use map
-  str.split('').forEach((item,index)=>{
-    if ( item === ' ' ){
-      spaceLoc.push(index)
-    }
-  })
+  //calculates the index of all empty spaces
+  let spaceLoc = str.split('').map((item,index)=>{
+    if ( item === ' ' ){return index;}
+  }).filter((item)=>{ if ( item ){return item;}})
 
   let spacelessReversed = str.replace(/\W/g, '').split('').reverse()
 
-  for ( let i = 0; i < spaceLoc.length; i++ ) {
-    spacelessReversed.splice(spaceLoc[i],0," ")
-  }
+  
+  spaceLoc.forEach((item,index)=>{
+    spacelessReversed.splice(spaceLoc[index],0," ");
+  })
 
   return spacelessReversed.join('')
 }
