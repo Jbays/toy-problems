@@ -19,51 +19,70 @@
 
 function wordGenerator(str){
   let lowerCaseStr = str.toLowerCase();
-  //include the base case
-  let output = [lowerCaseStr];
-  let vowelLocations = [];
+  let vowels = ['a','e','i','o','u'];
+  let allNewWords = [];
 
-  const vowels = ['a','e','i','o','u'];
+  /**
+   * @name: returnPerms
+   * @description: returns all permutations of vowels array
+   * @param1: vowel array
+   * @param2: number of permutations required
+   * @returns: array
+   **/
 
-  if ( !/[aeiou]/.test(lowerCaseStr) ) {
-    return output;
+  function returnPerms(array,number){
+    let output = [];
+
+    if ( number === 1 ) { return array; }
+
+    array.forEach((vowelOne)=>{
+      vowels.forEach((vowelTwo)=>{
+        output.push(vowelOne+vowelTwo)
+      })
+    })
+    return returnPerms(output,number-1);
   }
 
-  let vowelsContained = str.split('').filter((item,index)=>{
-    let indexFound = vowels.indexOf(item)
-    if ( indexFound > -1 ) {
-      vowelLocations.push([index]);
-      return item;
+  let vowelLocation = [];
+
+  lowerCaseStr.split('').forEach((letter,index)=>{
+    if ( vowels.indexOf(letter) > -1 ) {
+      vowelLocation.push(index);
     }
+  });
+
+  let allPerms = returnPerms(vowels,vowelLocation.length);
+  let replaced = lowerCaseStr.replace(/[aeiou]/g,' ');
+  allPerms.forEach((item,index)=>{
+    let splitUp = replaced.split('');
+    item.split('').forEach((letter,index)=>{
+      splitUp[vowelLocation[index]] = letter;
+    })
+
+    allNewWords.push(splitUp.join(''));
   })
 
-  let spliceableArr = vowels;
-  for ( let i = 0; i < vowelsContained.length; i++ ) {
-
-    let neededVowels = vowels.filter((item)=>{
-      if ( item !== vowelsContained[i] ){
-        return item;
-      }
-    });
-    vowelLocations[i].push(neededVowels)
-  }
-
-  for ( let i = 0; i < vowelLocations.length; i++ ) {
-    let index = vowelLocations[i][0];
-
-    for ( let j = 0; j < vowelLocations[i][1].length; j++ ) {
-      let clone = lowerCaseStr.substr(0,index) + vowelLocations[i][1][j]
-                  + lowerCaseStr.substr(index+1);
-      output.push(clone);
-    }
-  }
-
-  //return that whole array of permutations
-  return output;
+  return allNewWords;
 }
 
-console.log("",wordGenerator('Pszczyna'))
-console.log("",wordGenerator('aa'))
+// console.log("input: b >>>>>>>>",wordGenerator('b'))
+
+// console.log("input: Pszcyna >>",wordGenerator('Pszczyna'))
+// console.log("input: aPszcyn >>",wordGenerator('aPszczyn'))
+
+// console.log("input: alo >>",wordGenerator('alo'))
+// console.log("input: halo >>",wordGenerator('halo'))
+// console.log("input: arbor >>",wordGenerator('arbor'))
+// console.log("input: harbor >>",wordGenerator('harbor'))
+
+
+// console.log("input: aaa >>",wordGenerator('aaa'))
+
+// console.log("input: anaan >>>",wordGenerator('anaan'))
+// console.log("input: lalana >>>",wordGenerator('lalana'))
+// console.log("input: noion >>>",wordGenerator('noion'))
+// console.log("input: aloha >>>",wordGenerator('aloha'))
+
 //[ 'aa',
 //        'ae', 'ai', 'ao', 'au',
 //  'ea', 'ee', 'ei', 'eo', 'eu',
@@ -80,4 +99,3 @@ console.log("",wordGenerator('aa'))
 //   'ia',
 //   'oa',
 //   'ua', 'ae', 'ai', 'ao', 'au' ]
-console.log("",wordGenerator('b'))
