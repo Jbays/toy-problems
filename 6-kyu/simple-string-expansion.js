@@ -13,73 +13,32 @@
 //
 // Good luck!
 
+
+// NOTE: this does not work for super long strings.  Not sure why.
 function solve(str){
   let output = "";
-  //NOTE: lines 18 thru 29 jsonify the input
-  let relevantPiece = '["'+str.replace(/[(]/g,'",["')
-  let closingBrackets = "";
-  for ( let i = relevantPiece.length; i >= 0; i-- ) {
-    if ( relevantPiece[i] === ")" ) {
-      closingBrackets += "]"
-      if ( relevantPiece[i-1] !== ")" ){
-        relevantPiece = relevantPiece.slice(0,i) + '"' + closingBrackets + "]";
+  for ( let i = str.length-1; i >= 0; i-- ) {
+    let lastOutput = "";
+    if ( str[i] !== ")" ) {
+      if ( str[i] !== "(" ) {
+        if ( parseInt(str[i]) ) {
+          for ( let j = 1; j < parseInt(str[i]); j++ ) {
+            output = lastLetter + output;
+          }
+        } else {
+          output = str[i] + output;
+          lastLetter = output
+        }
       }
     }
   }
-  relevantPiece = JSON.parse(relevantPiece);
-
-  //recursive map --> should return string
-  function recursiveMap(nestedArrays,outputString,trailingBits){
-    if ( nestedArrays[1][1] === undefined ) {
-      let parent = nestedArrays[0].split('');
-      let child = nestedArrays[1][0];
-
-      console.log('at the bottom parent',parent)
-      console.log('at the bottom child',child)
-
-      parent.forEach((item)=>{
-        console.log("this will modify>>>",item);
-        //if item is a number
-        if ( parseInt(item) ) {
-          for ( let i = 0; i < parseInt(item); i++ ) {
-            outputString += child
-          }
-        } else {
-          //item is non-number
-          outputString += item;
-        }
-      })
-      console.log("nestedArrays!!!!>>>",nestedArrays)
-      console.log("outputString>>>",outputString)
-      console.log("this is trailingBits>>>",trailingBits);
-
-      trailingBits.push([outputString])
-
-      return recursiveMap(trailingBits, outputString)
-      // return outputString
-    }
-    console.log("first input nestedArrays >>>>",nestedArrays);
-    // console.log("nestedArrays[1]",nestedArrays[1]);
-    // console.log("nestedArrays[0]",nestedArrays[0]);
-    trailingBits.push(nestedArrays[0])
-    return recursiveMap(nestedArrays[1],outputString,trailingBits);
-    // return recursiveMap()
-
-    // return recursiveMap(nestedArrays,outputString)
-
-
-
-
-    // return outputString
-  }
-
-  return recursiveMap(relevantPiece,output,[]);
+  return output;
 }
 
 // console.log("ababab >>>>>>>>>",solve("(ab)"))
 // console.log("ababab >>>>>>>>>",solve("3(ab)"))
 // console.log("aababab >>>>>>>>>",solve("a3(ab)"))
 
-console.log("abbbabbb >>>>>>>",solve("2(a3(b))"))
-// console.log("bccbccbcc >>>>>>",solve("3(b(2(c)))"));
+// console.log("abbbabbb >>>>>>>",solve("2(a3(b))"))
+console.log("bccbccbcc >>>>>>",solve("3(b(2(c)))"));
 // console.log("kabaccbaccbacc >",solve("k(a3(b(a2(c))))"))
