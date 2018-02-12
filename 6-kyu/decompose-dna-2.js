@@ -51,13 +51,11 @@ function decomposeDoubleStrand(singleStrand) {
   let reverseFrame = singleStrand.split('').reverse().map((dnaLetter)=>{
     return reverseCompl[dnaLetter]
   }).join('');
-  // console.log("reverseFrame>>>",reverseFrame)
-  // // let frame1 = singleStrand.match(/.../g).join(' ')
   return [
     `Frame 1: ${singleStrand.match(/.../g).join(' ')}`,
     `Frame 2: ${singleStrand.match(/^.|...|..$/g).join(' ')}`,
     `Frame 3: ${singleStrand.match(/^..|...|.$/g).join(' ')}`,
-    `Reverse Frame 1: ${reverseFrame.match(/.../g).join(' ')}`,
+    `\nReverse Frame 1: ${reverseFrame.match(/.../g).join(' ')}`,
     `Reverse Frame 2: ${reverseFrame.match(/^.|...|..$/g).join(' ')}`,
     `Reverse Frame 3: ${reverseFrame.match(/^..|...|.$/g).join(' ')}`
   ].join('\n');
