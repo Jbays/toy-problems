@@ -48,7 +48,6 @@ function high(string){
     }).reduce((a,b)=>{
       return a+b;
     },0)
-    // let sum = converted.reduce((a,b)=>{ return a+b; })
 
     if ( sum > highestSum ) {
       highestSum = sum
@@ -56,7 +55,7 @@ function high(string){
     }
   })
 
-  return string.split(' ')[highestIndex]
+  return string.split(' ')[highestIndex] ? string.split(' ')[highestIndex] : ""
 }
 
 
