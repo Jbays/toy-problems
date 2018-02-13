@@ -35,7 +35,7 @@ function decomp(n) {
   }
 
   let primeFactors = [];
-  // let factorial = findPrimeFactors(calcFact(n));
+  let factorial = findPrimeFactors(calcFact(n));
   // console.log("calcFact(n)",calcFact(n))
 
 
@@ -76,6 +76,13 @@ function decomp(n) {
 // console.log("2^15 * 3^6 * 5^3 * 7^2 * 11 * 13 * 17 >>>>>",decomp(17))
 // console.log("2^19 * 3^9 * 5^4 * 7^3 * 11^2 * 13 * 17 * 19 >>>>>",decomp(22))
 console.log("2^22 * 3^10 * 5^6 * 7^3 * 11^2 * 13 * 17 * 19 * 23 >>>>>",decomp(25))
-// console.log(decomp(17), "2^15 * 3^6 * 5^3 * 7^2 * 11 * 13 * 17")
-// console.log(decomp(22), "2^19 * 3^9 * 5^4 * 7^3 * 11^2 * 13 * 17 * 19")
-// console.log(decomp(25), "2^22 * 3^10 * 5^6 * 7^3 * 11^2 * 13 * 17 * 19 * 23")
+
+//this is my answer.  What's wrong??
+//[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 5, 11]
+// primeFactors.forEach((item)=>{
+// 	if ( item === 2 ) {
+// 		counter++;
+//     }
+// })
+// console.log(counter);
+// 36 ----> VM412:6
