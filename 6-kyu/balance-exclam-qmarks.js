@@ -10,13 +10,38 @@
 //If they are balanced, return "Balance".
 //
 // Examples
-// balance("!!","??") === "Right"
-// balance("!??","?!!") === "Left"
-// balance("!?!!","?!?") === "Left"
-// balance("!!???!????","??!!?!!!!!!!") === "Balance"
 
 function balance(left,right){
-  //coding and coding....
+  let tally = 0;
 
+  left.split('').forEach((character)=>{
+    if ( character === "!" ) {
+      tally = tally-2;
+    }
+    if ( character === "?" ) {
+      tally = tally-3;
+    }
+  })
 
+  right.split('').forEach((character)=>{
+    if ( character === "!" ) {
+      tally = tally+2;
+    }
+    if ( character === "?" ) {
+      tally = tally+3;
+    }
+  })
+
+  if ( tally > 0 ) {
+    return "Right"
+  } else if ( tally < 0 ) {
+    return "Left"
+  } else {
+    return "Balance"
+  }
 }
+
+console.log("Right>>>>",balance("!!","??"))
+console.log("Left >>>>",balance("!??","?!!"))
+console.log("Left >>>>",balance("!?!!","?!?"))
+console.log("Balance >",balance("!!???!????","??!!?!!!!!!!"))
