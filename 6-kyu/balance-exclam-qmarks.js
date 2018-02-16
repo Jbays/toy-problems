@@ -14,28 +14,23 @@
 function balance(left,right){
   let tally = 0;
 
-  left.split('').forEach((character)=>{
-    if ( character === "!" ) {
-      tally = tally-2;
-    }
-    if ( character === "?" ) {
-      tally = tally-3;
-    }
-  })
+  function calculateTally(array){
+    return array.split('').reduce((a,b)=>{
+      if ( b === "!" ) {
+        return a+2;
+      } else {
+        return a+3
+      }
+    },0);
+  }
 
-  right.split('').forEach((character)=>{
-    if ( character === "!" ) {
-      tally = tally+2;
-    }
-    if ( character === "?" ) {
-      tally = tally+3;
-    }
-  })
+  let leftTally = calculateTally(left);
+  let rightTally = calculateTally(right);
 
-  if ( tally > 0 ) {
-    return "Right"
-  } else if ( tally < 0 ) {
-    return "Left"
+  if ( leftTally > rightTally ) {
+    return "Left";
+  } else if ( leftTally < rightTally ) {
+    return "Right";
   } else {
     return "Balance"
   }
