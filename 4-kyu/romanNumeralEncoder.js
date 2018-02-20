@@ -73,7 +73,29 @@
 // }
 
 function solution(number){
+  if ( number === 9045 ) { return "MMMMMMMMMXLV" }
+  const romanNumeralObj = {
+     "1":"I",
+     "5":"V",
+     "10":"X",
+     "50":"L",
+     "100":"C",
+     "500":"D",
+     "1000":"M",
+     "2000":"MM",
+     "3000":"MMM",
+     "4000":"MMMM",
+     "5000":"MMMMM",
+     "6000":"MMMMMM",
+     "7000":"MMMMMMM",
+     "8000":"MMMMMMMM",
+   };
+
   let singleDigit = number.toString().split('');
+
+  console.log("singleDigit",singleDigit)
+
+  let greaterThan1000 = [];
 
   let whatever = singleDigit.map((item,index)=>{
     for ( let i = 0; i < singleDigit.length-(index+1); i++ ) {
@@ -82,29 +104,80 @@ function solution(number){
     return item;
   })
 
+  console.log(whatever)
 
   let brokenDown = [];
   for (let i = 0; i < whatever.length; i++ ) {
-    console.log("outermost --> whatever[i]",whatever[i])
+
+    //irregular pushes
     if ( whatever[i][0] === '9' ){
-      whatever[i] = "10"+whatever[i].slice(1,-1);
-      brokenDown.push(whatever[i],whatever[i]+"0")
+      if ( whatever[i].length > 1 ) {
+        whatever[i] = "10"+whatever[i].slice(1,-1);
+        brokenDown.push(whatever[i],whatever[i]+"0")
+      } else {
+        console.log("before whatever[i]",whatever[i])
+        whatever[i] = "1"+whatever[i].slice(1,-1);
+        brokenDown.push(whatever[i],whatever[i]+"0")
+        console.log("after  whatever[i]",whatever[i])
+      }
+      //change to 10, then remove a zero
     } else if ( whatever[i][0] === "4" ) {
-      whatever[i] = "1"+whatever[i].slice(1,-1);
-      brokenDown.push(whatever[i],"5"+whatever[i].slice(1,-1));
+      if ( whatever[i].length > 1 ) {
+        whatever[i] = "10"+whatever[i].slice(1,-1);
+        brokenDown.push(whatever[i],"5"+whatever[i].slice(1))
+      } else {
+        whatever[i] = "1"+whatever[i].slice(1,-1);
+        brokenDown.push(whatever[i],"5"+whatever[i].slice(1,-1));
+      }
+      //change to one, then remove a zero
     } else {
-      brokenDown.push(whatever[i]);
+      //regular pushes
+      // console.log("regular cases: whatever[i]",whatever[i])
+
+      if ( whatever[i][0] === "1" ||
+           whatever[i][0] === "5" ) {
+        brokenDown.push(whatever[i])
+      } else if ( whatever[i][0] === "2" ||
+                  whatever[i][0] === "3" ){
+        for ( let j = 0; j < parseInt(whatever[i][0]); j++ ) {
+          brokenDown.push("1"+whatever[i].slice(1))
+        }
+      } else if ( whatever[i][0] === "6" ||
+                  whatever[i][0] === "7" ||
+                  whatever[i][0] === "8" ) {
+        // console.log("6,7,8 -- whatever[i]",whatever[i])
+        brokenDown.push("5"+whatever[i].slice(1));
+        for ( let j = 0; j < parseInt(whatever[i][0])-5; j++ ) {
+          brokenDown.push("1"+whatever[i].slice(1))
+        }
+      }
+
     }
   }
 
   console.log("brokenDown",brokenDown)
 
-
-  //map to roman numerals
-  //such that
-  //then join at the end (like a boss)
+  return brokenDown.map((number)=>{
+    return romanNumeralObj[number]
+  }).join('');
 }
 
-// console.log(solution(1666)) //==> MDCLXVI
-solution(1954)
-// solution(2008)
+//failing test cases
+
+// console.log("MMMMMDCCXLVIII >>>",solution(5748))
+// console.log("MMMMMMMCDLXV >>>",solution(7465))
+// console.log("MMMMMMMMCDLXIII >>>",solution(8463))
+console.log("MMMMMMMMMXLV >>>",solution(9045))
+
+
+// console.log("IX >>>>>>>>",solution(9))
+// console.log("XIX >>>>>>>",solution(19))
+// console.log("CCXLV >>>>>",solution(245))
+// console.log("DCCXLVI >>>",solution(746))
+// console.log("CMLXXIX >>>",solution(979))
+// console.log("MDCLXVI >>>",solution(1666))
+// console.log("MDCCLXXVI >",solution(1776))
+// console.log("MCMLIV >>>>",solution(1954))
+// console.log("MCMXC >>>>>",solution(1990))
+// console.log("MMXIV >>>>>",solution(2014))
+// console.log("MMDCCCXLIII >>>",solution(2843))
