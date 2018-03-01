@@ -45,39 +45,22 @@ class Node {
 }
 
 function stringify(list) {
-  // Write your code here
+  if (list === null ) {return "null"}
   let outputStr = "";
-
   function seekSomething(linkedList,string){
-    let keys = Object.keys(linkedList);
-
-    // console.log('keys',keys)
-
-    console.log(linkedList);
-
     outputStr += linkedList.data + " -> "
 
     if ( linkedList.next === null ) {
       return outputStr+"null"
+    } else {
+      return seekSomething(linkedList.next)
     }
-
-
-    // if ( node.next === null ) {
-    //
-    // }
-
-
-
   }
-
   return seekSomething(list,outputStr);
-
-  console.log("output",output);
-
 }
 
-console.log(stringify(new Node(1)) === "1 -> null");
-// console.log(stringify(new Node(1, new Node(2))), "vs. 1 -> 2 -> 3 -> null");
+// console.log(stringify(new Node(1)) === "1 -> null");
+console.log(stringify(new Node(1, new Node(2))) === "1 -> 2 -> null");
 // console.log(stringify(new Node(1, new Node(2, new Node(3)))), "vs. 1 -> 2 -> 3 -> null");
 // stringify(new Node(0, new Node(1, new Node(4, new Node(9, new Node(16)))))), "0 -> 1 -> 4 -> 9 -> 16 -> null");
 // stringify(null), "null");
