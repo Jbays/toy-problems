@@ -62,37 +62,41 @@ function phone(string, num) {
     // console.log("entries.length",entries.length)
     // console.log("entries",entries)
 
+    let match = null;
+    let name  = null;
     for ( let i = 0; i < entries.length; i++ ){
-
+      console.log("entries[i]",entries[i]);
       //find the match
       if ( entries[i].indexOf(num) > -1 ){
+        match = entries[i];
         let start = entries[i].indexOf("<")+1;
         let stop = entries[i].indexOf(">");
+        name = entries[i].slice(start,stop)
 
-        nameStr += entries[i].slice(start,stop);
-
-        //then attach address
-
+        nameStr += name;
       }
-
     }
 
+    console.log("match>>>>>",match);
+    match = match.replace('<'+name+'>',"")
 
+    //how do I parse the address out of this damn match string??
+    match = match.replace('+'+num,"")
+
+    console.log("match adjusted 2",match);
   }
 
   return phoneStr+nameStr+addressStr
 }
 
-// phone =>
-// name =>
-// address =>
+console.log(phone(dr, "1-541-754-3010"))
+// console.log(phone(dr, "1-541-754-3010") === "Phone => 1-541-754-3010, Name => J Steeve, Address => 156 Alphand St.")
 //find Arthur Clarke.  Return in a particular phone.
-console.log(phone(dr,"1-121-504-8974"));
+// console.log(phone(dr,"1-121-504-8974"));
 
 // phone(dr, "48-421-674-8974"), "Phone => 48-421-674-8974, Name => Anastasia, Address => Via Quirinal Roma")
 // phone(dr, "1-921-512-2222"), "Phone => 1-921-512-2222, Name => Wilfrid Stevens, Address => Wild Street AA-67209")
 // phone(dr, "1-908-512-2222"), "Phone => 1-908-512-2222, Name => Peter O'Brien, Address => High Street CC-47209")
-// phone(dr, "1-541-754-3010"), "Phone => 1-541-754-3010, Name => J Steeve, Address => 156 Alphand St.")
 // phone(dr, "1-121-504-8974"), "Phone => 1-121-504-8974, Name => Arthur Clarke, Address => San Antonio TT-45120")
 // phone(dr, "1-498-512-2222"), "Phone => 1-498-512-2222, Name => Bernard Deltheil, Address => Mount Av. Eldorado")
 
