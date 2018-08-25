@@ -1,7 +1,14 @@
+//https://www.hackerrank.com/challenges/matrix-rotation-algo/problem
+
+/*
+  You are given a 2D matrix of dimension n x m and a positive integer r . 
+  You have to rotate the matrix r times and print the resultant matrix. 
+  Rotation should be in anti-clockwise direction.
+*/
 //2x2
 const testCase1 = [
   [1,2],
-  [3,4]
+  [4,3]
 ];
 
 //3x2
@@ -75,32 +82,35 @@ const testCase10 = [
 
 function matrixRotation(matrix,r){
   let rows = matrix[0].length;
-  let columns = 0;
+  // let columns = 0;
   console.log('input matrix>>>',matrix);
   console.log('num required rotations',r);
 
   //for r number of rotations
   for ( let i = 0; i < r; i++ ) {
-    //gather all elements
-    let topAndBottom = [];
+    //in correct sequence, gather all elements into these arrays
+    let topBottomAndRightEdges = [];
     let lastEdges = []
     matrix.forEach((subMatrix,index)=>{
-      //if at the first or very last index
+      //if either first or last index, take whole array
       if ( index === 0 ) {
-        topAndBottom.push(...subMatrix);
+        topBottomAndRightEdges.push(...subMatrix);
       } else if ( !matrix[index+1] ){
-        topAndBottom.push(...subMatrix.reverse());
+        topBottomAndRightEdges.push(...subMatrix.reverse());
       } else {
-        topAndBottom.push(subMatrix[subMatrix.length-1]);
+        //else take right edges
+        topBottomAndRightEdges.push(subMatrix[subMatrix.length-1]);
+        //then take left edges
         lastEdges.push(subMatrix[0]);
       }
     });
     
+    //combine these arrays in correct sequence
+    let allRelevantElements = topBottomAndRightEdges.concat(lastEdges.reverse());
     //perform anticlockwise translation
-    let allRelevantElements = topAndBottom.concat(lastEdges.reverse());
     allRelevantElements.push(allRelevantElements[0])
     allRelevantElements.shift();
-    console.log('allRelevantElements',allRelevantElements);
+    // console.log('allRelevantElements',allRelevantElements);
     
     //now let's try to walk back along the matrix while rewriting
     let counter = 0;
@@ -118,26 +128,33 @@ function matrixRotation(matrix,r){
           counter++;
         })
       } else {
-        //fourth step to rewrite -- do the left-side edges
-        subMatrix[0] = allRelevantElements[allRelevantElements.length-index];
-        
-        // subMatrix[0] = allRelevantElements[allRelevantElements.length-1];
         //second step to rewrite -- do the right-side edges
         subMatrix[subMatrix.length-1] = allRelevantElements[counter];
+
+        //fourth step to rewrite -- do the left-side edges
+        subMatrix[0] = allRelevantElements[allRelevantElements.length-index];
         counter++;
       }
     })
   }
-  console.log('this is columns',columns)  
+
+  
+  //logic for detecting whether input matrix has submatrices requiring r rotations
+  //if either rows or columns is greater than 4
+  //if both rows and columns are above 3
   return matrix;
 }
 
+//working -- all tested through r rotations
 // console.log(matrixRotation(testCase1,1))
+// console.log(matrixRotation(testCase2,1))
 // console.log(matrixRotation(testCase2,1))
 // console.log(matrixRotation(testCase3,1))
 // console.log(matrixRotation(testCase4,1))
+
+//not working --> center pieces not rotating
 // console.log(matrixRotation(testCase5,1))
 // console.log(matrixRotation(testCase6,1))
-console.log(matrixRotation(testCase7,3))
+// console.log(matrixRotation(testCase7,3))
 // console.log(matrixRotation(testCase8,1))
 // console.log(matrixRotation(testCase9,1))
