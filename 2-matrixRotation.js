@@ -81,8 +81,9 @@ const testCase10 = [
 ]
 
 function matrixRotation(matrix,r){
-  let rows = matrix[0].length;
-  // let columns = 0;
+  let rows = 0;
+  let columns = matrix[0].length;
+  let iKnowRowCount = false;
   console.log('input matrix>>>',matrix);
   console.log('num required rotations',r);
 
@@ -103,7 +104,12 @@ function matrixRotation(matrix,r){
         //then take left edges
         lastEdges.push(subMatrix[0]);
       }
+
+      //if going through this code the first time, count the rows please.
+      if (!iKnowRowCount){rows++};
     });
+    //stop counting rows please
+    iKnowRowCount = true;
     
     //combine these arrays in correct sequence
     let allRelevantElements = topBottomAndRightEdges.concat(lastEdges.reverse());
@@ -138,10 +144,28 @@ function matrixRotation(matrix,r){
     })
   }
 
-  
   //logic for detecting whether input matrix has submatrices requiring r rotations
-  //if either rows or columns is greater than 4
-  //if both rows and columns are above 3
+  //if both columns and rows are above 3
+  //AND if either columns or rows is greater than 4
+  if ( (rows >=3 && columns >= 3) && (rows >= 4 || columns >= 4) ) {
+    
+    console.log('rows',rows)
+    console.log('columns',columns)
+    console.log('matrix --> after outer translation',matrix);
+    let subMatrix = [];
+    for ( let i = 1; i < rows-1; i++ ) {
+      //remove submatrix
+      subMatrix.push(matrix[i].slice(1,-1));
+    }
+    
+    //rotate submatrix r rotations
+    subMatrix = matrixRotation(subMatrix,r);
+    
+    //merge submatrix back with original matrix
+
+
+  }
+
   return matrix;
 }
 
@@ -155,6 +179,7 @@ function matrixRotation(matrix,r){
 //not working --> center pieces not rotating
 // console.log(matrixRotation(testCase5,1))
 // console.log(matrixRotation(testCase6,1))
-// console.log(matrixRotation(testCase7,3))
-// console.log(matrixRotation(testCase8,1))
+// console.log(matrixRotation(testCase7,1))
+console.log(matrixRotation(testCase8,1))
 // console.log(matrixRotation(testCase9,1))
+// console.log(matrixRotation(testCase10,1))
