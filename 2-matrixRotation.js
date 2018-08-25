@@ -80,12 +80,20 @@ const testCase10 = [
   [13,12,11,10,9]
 ]
 
+//6x6
+const testCase11 = [
+  [1,  2, 3, 4, 5, 6],
+  [20, 1, 2, 3, 4, 7],
+  [19,12, 1, 2, 5, 8],
+  [18,11, 4, 3, 6, 9],
+  [17,10, 9, 8, 7,10],
+  [16,15,14,13,12,11]
+]
+
 function matrixRotation(matrix,r){
   let rows = 0;
   let columns = matrix[0].length;
   let iKnowRowCount = false;
-  // console.log('input matrix>>>\n',matrix);
-  // console.log('num required rotations',r);
 
   //for r number of rotations
   for ( let i = 0; i < r; i++ ) {
@@ -116,7 +124,6 @@ function matrixRotation(matrix,r){
     //perform anticlockwise translation
     allRelevantElements.push(allRelevantElements[0])
     allRelevantElements.shift();
-    // console.log('allRelevantElements',allRelevantElements);
     
     //now let's try to walk back along the matrix while rewriting
     let counter = 0;
@@ -148,10 +155,6 @@ function matrixRotation(matrix,r){
   //if both columns and rows are above 3
   //AND if either columns or rows is greater than 4
   if ( (rows >=3 && columns >= 3) && (rows >= 4 || columns >= 4) ) {
-    
-    // console.log('rows',rows)
-    // console.log('columns',columns)
-    // console.log('matrix --> after outer translation',matrix);
     let subMatrix = [];
     for ( let i = 1; i < rows-1; i++ ) {
       //remove submatrix
@@ -171,17 +174,14 @@ function matrixRotation(matrix,r){
   return matrix;
 }
 
-//working -- all tested through r rotations
 // console.log(matrixRotation(testCase1,1))
-// console.log(matrixRotation(testCase2,1))
 // console.log(matrixRotation(testCase2,1))
 // console.log(matrixRotation(testCase3,1))
 // console.log(matrixRotation(testCase4,1))
-
-//not working --> center pieces not rotating
 // console.log(matrixRotation(testCase5,1))
 // console.log(matrixRotation(testCase6,1))
 // console.log(matrixRotation(testCase7,1))
 // console.log(matrixRotation(testCase8,1))
 // console.log(matrixRotation(testCase9,1))
 // console.log(matrixRotation(testCase10,1))
+// console.log(matrixRotation(testCase11,2))
