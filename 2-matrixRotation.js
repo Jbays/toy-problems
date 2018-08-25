@@ -1,143 +1,103 @@
-//2x2
+//slice assignment
+
 const testCase1 = [
   [1,2],
   [3,4]
 ];
 
-//3x2
 const testCase2 = [
-  [1,2,3],
-  [6,5,4]
-]
-
-//2x3
-const testCase3 = [
-  [1,2],
-  [6,3],
-  [5,4]
-]
-
-//3x3
-const testCase4 = [
   [1,2,3],
   [8,9,4],
   [7,6,5]
 ];
-
-//4x3
-const testCase5 = [
-  [1 ,2,3,4],
-  [10,1,2,5],
-  [9 ,8,7,6],
-]
-
-//3x4
-const testCase6 = [
-  [1,2,3],
-  [10,1,4],
-  [9,2,5],
-  [8,7,6]
-]
-
-//4x4
-const testCase7 = [
+const testCase3 = [
   [1, 2,3,4],
   [12,1,2,5],
   [11,4,3,6],
   [10,9,8,7]
 ];
 
-//4x5
-const testCase8 = [
-  [1, 2, 3,4],
-  [14,1, 2,5],
-  [13,6, 3,6],
-  [12,5, 4,7],
-  [11,10,9,8]
-];
-
-//5x4
-const testCase9 = [
-  [1, 2, 3, 4,5],
-  [14,1, 2, 3,6],
-  [13,6, 5, 4,7],
-  [12,11,10,9,8]
-];
-
-// 5x5
-const testCase10 = [
-  [1,  2, 3, 4,5],
-  [16, 1, 2, 3,6],
-  [15, 8, 9, 4,7],
-  [14, 7, 6, 5,8],
-  [13,12,11,10,9]
-]
-
-function matrixRotation(matrix,r){
-  let rows = matrix[0].length;
+function matrixRotation(matrix,rotations){
+  let rows = 0
   let columns = 0;
-  console.log('input matrix>>>',matrix);
-  console.log('num required rotations',r);
+  let midPoint = findMidpoint(matrix);
 
-  //for r number of rotations
-  for ( let i = 0; i < r; i++ ) {
-    //gather all elements
-    let topAndBottom = [];
-    let lastEdges = []
-    matrix.forEach((subMatrix,index)=>{
-      //if at the first or very last index
-      if ( index === 0 ) {
-        topAndBottom.push(...subMatrix);
-      } else if ( !matrix[index+1] ){
-        topAndBottom.push(...subMatrix.reverse());
-      } else {
-        topAndBottom.push(subMatrix[subMatrix.length-1]);
-        lastEdges.push(subMatrix[0]);
-      }
-    });
+  let dimensions = `${rows}x${columns}`;
+  
+  console.log('this is input \n',matrix);
+  // console.log('this is midPoint',midPoint);
+  // console.log('rows',rows);
+  // console.log('columns',columns);
+
+  function findSlices(matrix,matrixDimensions){
+    let output = [];
+    //the simplest case! 2x2 matrix
+    if (parseInt(matrixDimensions.split('x')[0]) === 2 ) {
+      
+      output.push([matrix[0][1],matrix[1][1]],[matrix[0][0],matrix[1][0]])
+      return output;
+    } 
     
-    //perform anticlockwise translation
-    let allRelevantElements = topAndBottom.concat(lastEdges.reverse());
-    allRelevantElements.push(allRelevantElements[0])
-    allRelevantElements.shift();
-    console.log('allRelevantElements',allRelevantElements);
-    
-    //now let's try to walk back along the matrix while rewriting
-    let counter = 0;
-    matrix.forEach((subMatrix,index)=>{
-      if ( index === 0 ) {
-        //first step to rewrite -- do the top
-        subMatrix.forEach((singleElement,innerIndex)=>{
-          subMatrix[innerIndex] = allRelevantElements[innerIndex]
-          counter++;
-        })
-      } else if ( !matrix[index+1] ) {
-        //third step to rewrite -- do the bottom
-        subMatrix.forEach((singleElement,innerIndex)=>{
-          subMatrix[subMatrix.length-1-innerIndex] = allRelevantElements[counter];
-          counter++;
-        })
+    if ( parseInt(matrixDimensions.split('x')[0]) === 3 ) {
+      let topSlice = matrix[0].slice(0);
+      let rightEdges = findEdges(matrix,dimensions,'right');
+      let leftEdges = findEdges(matrix,dimensions,'left');
+      let bottomSlice = matrix[rows-1].slice(0).reverse();
+      
+      output.push(...topSlice,...rightEdges,...bottomSlice,...leftEdges)
+  
+      //finally perform the swap
+      let first = output.shift();
+      output.push(first);
+    }
+    return output;
+  }
+
+  function findMidpoint(arrayOfArrays){
+    rows = arrayOfArrays[0].length;
+
+    arrayOfArrays.forEach((array)=>{columns++});
+
+    return [(Math.floor(rows/2)-1),Math.floor((columns/2)-1)]
+  }
+
+  function findEdges(arrayOfArrays,matrixDimensions,direction){
+    let output = []
+    let edgeLocationsRow = [];
+
+    for ( let i = 1; i <= rows-2; i++ ) {
+      edgeLocationsRow.push(i);
+    }
+    edgeLocationsRow.forEach((sliceIndex)=>{
+      if ( direction === 'right' ) {
+        output.push(...arrayOfArrays[sliceIndex].slice(-1));
       } else {
-        //fourth step to rewrite -- do the left-side edges
-        subMatrix[0] = allRelevantElements[allRelevantElements.length-index];
-        
-        // subMatrix[0] = allRelevantElements[allRelevantElements.length-1];
-        //second step to rewrite -- do the right-side edges
-        subMatrix[subMatrix.length-1] = allRelevantElements[counter];
-        counter++;
+        output.push(...arrayOfArrays[sliceIndex].slice(0,2))
       }
     })
+    console.log('output',output);
+    return output;
   }
-  console.log('this is columns',columns)  
-  return matrix;
+
+  function recomposeMatrix(rotatedArray){
+    console.log('rotatedArray',rotatedArray);
+  }
+
+  // findSlices(matrix,dimensions);
+  let whatever = findSlices(matrix,dimensions);
+
+  if ( rows === 2 ) {
+    return whatever;
+  }
+
+  let finalOutput = [];
+  for ( let i = 0; i < rows; i++ ) {
+    finalOutput.push(whatever.slice(i*rows,i*rows+rows));
+  }
+
+  return finalOutput;
 }
 
-// console.log(matrixRotation(testCase1,1))
-// console.log(matrixRotation(testCase2,1))
-// console.log(matrixRotation(testCase3,1))
-// console.log(matrixRotation(testCase4,1))
-// console.log(matrixRotation(testCase5,1))
-// console.log(matrixRotation(testCase6,1))
-console.log(matrixRotation(testCase7,3))
-// console.log(matrixRotation(testCase8,1))
-// console.log(matrixRotation(testCase9,1))
+// console.log(matrixRotation(testCase1))
+console.log(matrixRotation(testCase2))
+// console.log(matrixRotation(testCase3))
