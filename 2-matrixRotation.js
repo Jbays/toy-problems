@@ -84,8 +84,8 @@ function matrixRotation(matrix,r){
   let rows = 0;
   let columns = matrix[0].length;
   let iKnowRowCount = false;
-  console.log('input matrix>>>',matrix);
-  console.log('num required rotations',r);
+  // console.log('input matrix>>>\n',matrix);
+  // console.log('num required rotations',r);
 
   //for r number of rotations
   for ( let i = 0; i < r; i++ ) {
@@ -149,9 +149,9 @@ function matrixRotation(matrix,r){
   //AND if either columns or rows is greater than 4
   if ( (rows >=3 && columns >= 3) && (rows >= 4 || columns >= 4) ) {
     
-    console.log('rows',rows)
-    console.log('columns',columns)
-    console.log('matrix --> after outer translation',matrix);
+    // console.log('rows',rows)
+    // console.log('columns',columns)
+    // console.log('matrix --> after outer translation',matrix);
     let subMatrix = [];
     for ( let i = 1; i < rows-1; i++ ) {
       //remove submatrix
@@ -159,13 +159,15 @@ function matrixRotation(matrix,r){
     }
     
     //rotate submatrix r rotations
-    subMatrix = matrixRotation(subMatrix,r);
+    let translatedSubMatrices = matrixRotation(subMatrix,r);
     
     //merge submatrix back with original matrix
-
-
+    for ( let i = 1; i < rows-1; i++ ) {
+      for ( let j = 1; j < columns-1; j++ ) {
+        matrix[i][j] = translatedSubMatrices[i-1][j-1];
+      }
+    }
   }
-
   return matrix;
 }
 
@@ -180,6 +182,6 @@ function matrixRotation(matrix,r){
 // console.log(matrixRotation(testCase5,1))
 // console.log(matrixRotation(testCase6,1))
 // console.log(matrixRotation(testCase7,1))
-console.log(matrixRotation(testCase8,1))
+// console.log(matrixRotation(testCase8,1))
 // console.log(matrixRotation(testCase9,1))
 // console.log(matrixRotation(testCase10,1))
