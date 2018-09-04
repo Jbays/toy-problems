@@ -5,37 +5,20 @@ function bestMatch(winnerArr,loserArr){
 
   let lowestDiff = Math.min(...differences);
 
-  //two possible cases
-  
-  //case one: if there is actually one single lowest difference
   if ( differences.indexOf(lowestDiff) === differences.lastIndexOf(lowestDiff) ) {
     return differences.indexOf(lowestDiff);
   }
-  
-  console.log('this is differences',differences);
-  console.log('lowestDiff>>>>',lowestDiff);
 
-  //case two: if the lowest difference has duplicates
+  let highestLoserScore = null;
+  differences.forEach((scoreDiff,index)=>{
+    if ( scoreDiff === lowestDiff ) {
+      if ( loserArr[index] >= highestLoserScore ) {
+        highestLoserScore = loserArr[index];
+      }
+    }
+  })
 
-  //look for the 
-  //currently finding the highest difference!
-  //not the lowest difference which corresponds to 
-  // let lowestDifference = differences[0];
-  
-  // differences.forEach((scoreDiff,index)=>{
-  //   if (scoreDiff <= lowestDifference ) {
-  //     lowestDifference = scoreDiff;
-  //   }
-  // })
-  // console.log('lowestDifference',lowestDifference);
-  // return differences.lastIndexOf(lowestDifference);
-
-
-
-  //if ties --> return index corresponding to highest score in loserArr
-  //&& lowest score in winnerArr
-
-
+  return loserArr.indexOf(highestLoserScore);
 }
 
 // console.log(bestMatch([6, 4], [1, 2])=== 1)
