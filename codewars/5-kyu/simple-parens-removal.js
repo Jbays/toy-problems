@@ -93,48 +93,108 @@
 //   return newStatement
 // }
 
-function solve(string){
-  console.log("original input>>",string);
-  let staging = "";
-  let mappedString = "";
+// function solve(string){
+//   let staging = "";
+//   let mappedString = "";
+//
+//   //this adds the extra pluses
+//   for ( let i = 0; i < string.length; i++ ) {
+//     if ( string[i].match(/[a-z]/) ){
+//       if ( string[i-1] === "(" ){
+//         mappedString += "+"+string[i];
+//       } else {
+//         mappedString += string[i];
+//       }
+//     } else {
+//       mappedString += string[i];
+//     }
+//   }
+//   // console.log("mappedString>>",mappedString);
+//
+//   let flipSigns = false;
+//   function flipThoseSigns(operator){
+//     return (operator === "+") ? "-" : "+";
+//   }
+//
+//   mappedString.split('').forEach((item,index)=>{
+//     console.log(item);
+//     let lastChar = string[index-1];
+//     let nextChar = string[index+1];
+//
+//     if ( index === 0 || item.match(/[a-z]/) ){
+//       staging += item;
+//     } else if ( item === "+" ){
+//       staging += item;
+//     } else if ( item === "-" ) {
+//
+//       if ( nextChar === "(" ){
+//
+//
+//         // console.log("distribute the negative");
+//         // let remainder = string.slice(index+2);
+//         // console.log('this is the remainder',remainder)
+//         //
+//         // let stop = (remainder.indexOf('(') !== -1 ) ? remainder.indexOf('(') : remainder.indexOf(')');
+//         // console.log('stop',stop)
+//         // for ( let i = index-1; i < stop; i++ ) {
+//         //   console.log("remainder[i]",remainder[i])
+//         //   if ( remainder[i] === "+" ) {
+//         //     staging += item;
+//         //   } else if ( remainder[i] === "-" ) {
+//         //     mappedString[index]
+//         //   }
+//         // }
+//       }
+//       staging += item;
+//     }
+//
+//
+//   })
 
-  let val = string.split('').reduce((a,b)=>{
-    if ( a.match(/[a-z]/) && b.match(/[a-z]/) ){
-      return a+b
-    } else {
-      return a
-    }
-  }).length
-
-  val = (string[0] === "-") ? 2*val : (2*val)-1;
-
-  console.log("this is val",val);
-
-  let snippet = string.indexOf("(");
-  let start = 0;
-
-  while ( staging.length < val ) {
-    // snippet = string.indexOf("(");
+  // return staging;
 
 
-    console.log("hello friends!",staging);
-    staging += "1"
-  }
-
-  return staging;
-
-  //this adds the extra pluses
-  // for ( let i = 0; i < string.length; i++ ) {
-  //   if ( string[i].match(/[a-z]/) ){
-  //     if ( string[i-1] === "(" ){
-  //       mappedString += "+"+string[i];
-  //     } else {
-  //       mappedString += string[i];
-  //     }
+  // let val = string.split('').reduce((a,b)=>{
+  //   if ( a.match(/[a-z]/) && b.match(/[a-z]/) ){
+  //     return a+b
   //   } else {
-  //     mappedString += string[i];
+  //     return a
+  //   }
+  // }).length
+  //
+  // val = (string[0] === "-") ? 2*val : (2*val)-1;
+  //
+  // console.log("this is val",val);
+  //
+  // let snippet = string.indexOf("(");
+  // let start = 0;
+
+  // while ( staging.length < val ) {
+  //   let lastChar    = string[staging.length-1]
+  //   let currentChar = string[staging.length];
+  //   let nextChar    = string[staging.length+1]
+  //
+  //   console.log("currentChar",currentChar)
+  //   console.log("staging",staging);
+  //
+  //   if ( !lastChar || currentChar.match(/[a-z]/) ){
+  //     staging += currentChar;
+  //   } else if ( currentChar === "+" ) {
+  //     staging += currentChar;
+  //   } else if ( currentChar === "(" ){
+  //
+  //   } else if ( currentChar === "-" ) {
+  //
+  //     if ( nextChar === "(" ){
+  //       console.log("annoying case!")
+  //     }
+  //     staging += currentChar;
+  //   } else {
+  //     staging += "1"
   //   }
   // }
+
+
   //
   // console.log("mappedString",mappedString);
   //
@@ -176,12 +236,24 @@ function solve(string){
 
   // parseInChunks(string.slice(0,firstParen))
 
-  return staging;
-}
+  // return staging;
+// }
 
 //working
 // console.log("a+(-b):",solve("a+(-b)")==="a-b");
 
+function solve(string){
+  let output = "";
+
+  let ready = string.split('(');
+
+  // ready.
+
+  console.log("ready",ready)
+
+
+  return output;
+}
 
 // console.log(solve("a-(b)"),"a-b");
 // console.log(solve("a-(-b)"),"a+b");

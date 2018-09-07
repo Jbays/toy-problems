@@ -31,21 +31,57 @@ function decomp(n) {
       arr.push(i);
     }
 
-    return arr.reduce((a,b)=>{return a*b;})
+    //CONCLUSION: the factorials aren't being calculated correct
+    //tomorrow i'll try a library mathjs or bignumber something
+    return arr.reduce((a,b)=>{
+      console.log(a.toPrecision(21))
+      return a*b;
+    })
   }
 
+
+
   let primeFactors = [];
+  //NOTE: this is original value of factorial
+  // let factorial = findPrimeFactors(calcFact(n));
+
+  //NOTE: for debugging purposes
   let factorial = findPrimeFactors(calcFact(n));
-  // console.log("calcFact(n)",calcFact(n))
+  // let factorial = findPrimeFactors(15511210043330984000000000)
+
+  // this is the listed factorial dividied by 2^22
+  // the point at which my calculations becomine incorrect
+  // let factorial = findPrimeFactors(3698160658676859000)
+  // let factorial = findPrimeFactors(3.6981607e+18)
+
+
+  //http://mathforum.org/library/drmath/sets/select/dm_factorial_list.html
+  //this is my calculated factorial
+  //15511210043330985984000000
+  //this is the listed factorial
+  //15511210043330984000000000
+  //1.5511210043330984e+25
+
+  //NOTE: WHAT ABOUT PUSHING these each number into an array?
+  //then I could reduce the array each and every time.
+  //That'd slow performance -- but I could guarantee data preservation
+
+
+
 
 
   function findPrimeFactors(number){
-    console.log("number>>>",number);
-    console.log("primeFactors",primeFactors)
+    // console.log("number>>>",number);
+    // console.log("primeFactors",primeFactors)
     let match = null;
     if ( number <= 1 ) { return }
     for ( let i = 2; i <= number; i++ ) {
-      console.log("this is i>>>",i);
+      // console.log("this is i>>>",i);
+
+      if ( primeFactors.length === 22 ) {
+        // console.log("~!~!~!~!primeFactors",primeFactors);
+      }
+
       if ( number % i === 0 ) {
         primeFactors.push(i);
         match = i;

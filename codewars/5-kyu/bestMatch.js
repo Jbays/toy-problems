@@ -1,3 +1,5 @@
+// https://www.codewars.com/kata/simple-fun-number-166-best-match/train/javascript
+
 function bestMatch(winnerArr,loserArr){
   let differences = winnerArr.map((score,index)=>{
     return score - loserArr[index];

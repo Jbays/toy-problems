@@ -15,17 +15,44 @@
 
 */
 
-function longest(arr, n) {
-  let originalArr = arr.slice(0);
-  originalArr.sort((a,b)=>{
-    return b.length - a.length || arr.indexOf(a) - arr.indexOf(b);
-  })
-  return arr[n-1];
+function longest(arr,n){
+  let originalArr = arr;
+  // let originalArr = arr.slice(0);
+
+  // let originalArr = arr.slice(0);
+  let originalArr = arr.sort((a,b)=>{
+    return b.length - a.length || arr.indexOf(a) - arr.indexOf(b)
+  })  
+  return originalArr[n-1]
 }
 
-//working!
+console.log(longest(['aa', 'bb', 'cc', 'dd', 'eee', 'b', 'f', 'ff', 'hhh', 'gggg'], 4))
+
 // console.log(longest(['Hello', 'World', 'Codewars', 'Katas'], 3)=== 'World');
 // console.log(longest(['Hello', 'World', 'Codewars', 'Katas'], 4)=== 'Katas');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function longest(arr, n) {
+//   let originalArr = arr.slice(0);
+//   originalArr.sort((a,b)=>{
+//     return b.length - a.length || arr.indexOf(a) - arr.indexOf(b);
+//   })
+//   return arr[n-1];
+// }
+
+//working!
 // console.log(longest(['aa', 'bb', 'cc', 'dd', 'eee', 'b', 'f', 'ff', 'hhh', 'gggg'], 4), 'aa');
 // console.log(longest(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k'], 1), 'a');
 // console.log(longest(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k', 'l'], 1), 'a');
@@ -48,23 +75,23 @@ function longest(arr, n) {
 // ,11))
 
 //Expected: 'jlufp', instead got: 'shryh'
-console.log(longest(
-  ['atebydymsy',
-  'go',
-  'jlufp',
-  'ckwvawv',
-  'wnaoxg',
-  'shryh',
-  'ytxjtsp',
-  'gyrrepjkt',
-  'ibmyfixkt',
-  'kjmayvcna',
-  'xbckvmruh',
-  'khujc',
-  'yofdyvyvqw',
-  'mhq',
-    'jb']
-,11));
+// console.log(longest(
+//   ['atebydymsy',
+//   'go',
+//   'jlufp',
+//   'ckwvawv',
+//   'wnaoxg',
+//   'shryh',
+//   'ytxjtsp',
+//   'gyrrepjkt',
+//   'ibmyfixkt',
+//   'kjmayvcna',
+//   'xbckvmruh',
+//   'khujc',
+//   'yofdyvyvqw',
+//   'mhq',
+//     'jb']
+// ,11));
 
 //   'atebydymsy',
 //   'go',

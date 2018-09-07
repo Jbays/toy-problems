@@ -22,3 +22,15 @@
 // C          100
 // D          500
 // M          1,000
+
+
+function solution(roman){
+  // complete the solution by transforming the
+  // string roman numeral into an integer
+}
+
+console.log("21",solution("XXI"))
+console.log("1",solution("I"))
+console.log("4",solution("IV"))
+console.log("2008",solution("MMVIII"))
+console.log("1666",solution("MDCLXVI"))

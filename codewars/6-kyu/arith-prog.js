@@ -10,16 +10,21 @@
 //
 // PS: This is a sample question of the facebook engineer challenge on interviewstreet. I found it quite fun to solve on paper using math, derive the algo that way. Have fun!
 
-function findMissing(list) {
-  let interval = 0;
-  let missing = 0;
-  for (let i=1;i<list.length;i++) {
-    if (Math.abs(interval) < Math.abs(list[i] - list[i-1])) {
-      interval = list[i] - list[i-1];
-      missing = list[i] - interval/2;
-    }
-  }
-  return missing;
+// function findMissing(list) {
+//   let interval = 0;
+//   let missing = 0;
+//   for (let i=1;i<list.length;i++) {
+//     if (Math.abs(interval) < Math.abs(list[i] - list[i-1])) {
+//       interval = list[i] - list[i-1];
+//       missing = list[i] - interval/2;
+//     }
+//   }
+//   return missing;
+// }
+
+function findMissing(list){
+  let step = (list[list.length - 1] - list[0]) / (list.length);
+  return list.filter((val, index)=>{ return val !== (list[0] + index * step); })[0] - step;
 }
 
 console.log(findMissing([1,3,5,9,11]))
