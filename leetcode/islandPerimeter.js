@@ -45,24 +45,19 @@ function islandPerimeter(arrayOfArrays){
   })
 
   function checkAgainstMapEdge(wholeGrid,rowPosition,colPosition){
-    //check for edges against the map
     if ( wholeGrid[rowPosition-1] === undefined ) {
-      // console.log('rowPosition-1')
       perimeterCount++;
     }
     
     if ( wholeGrid[rowPosition][colPosition-1] === undefined ) {
-      // console.log('colPosition-1')
       perimeterCount++;
     }
     
     if ( wholeGrid[rowPosition+1] === undefined ) {
-      // console.log('rowPosition+1')
       perimeterCount++;
     }
     
     if ( wholeGrid[rowPosition][colPosition+1] === undefined ) {
-      // console.log('colPosition+1')
       perimeterCount++
     }
   }
