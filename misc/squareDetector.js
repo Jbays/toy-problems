@@ -54,7 +54,7 @@ let input1 = [
   ['_'],
   ['|','|'],
   ['_']
-]
+];
 
 let input2 = [
   ['_','_'],
@@ -62,7 +62,7 @@ let input2 = [
   ['_'],
   ['|','','|'],
   ['_','_']
-]
+];
 
 let input3 = [
   ['_','_'],
@@ -70,7 +70,7 @@ let input3 = [
   ['_'],
   ['|',],
   ['_','_']
-]
+];
 
 let input4 = [
   ['_','_','_'],
@@ -80,79 +80,96 @@ let input4 = [
   ['_','_','_',],
   ['|',],
   ['','_','_']
+];
+
+let input5 = [
+  ['_','_'],
+  ['|','|','|'],
+  ['_','_'],
+  ['|','|','|'],
+  ['_','_'],
 ]
 
+let input6 = [
+  ['_','_','_'],
+  ['|','|','|'],
+  ['_','_'],
+  ['|','|','|'],
+  ['_','_'],
+]
+
+
+
 function squareDetector(array){
-  console.log(array);
   let count = 0;
 
   for ( let i = 0; i < array.length; i=i+2 ) {
     for ( let j = 0; j < array[i].length; j++ ) {
-      console.log('i',i)
-      console.log('array[i]',array[i])
+      let squareOfThisSize = 1;
+      let topLeftOfSquare = array[i][j];
+      let bottomArr = array[i+2*squareOfThisSize];
+      let futureArr = array[i+3*squareOfThisSize];
+
+      //if top of square is defined && the array which SHOULD contain bottom of square is defined
+      if ( topLeftOfSquare === '_' && Array.isArray(bottomArr) ) {
+        while ( (squareOfThisSize+j) <= array[i].length ){
+          count = checkForSquare(i,j,squareOfThisSize,count);
+          
+          if ( Array.isArray(futureArr) ){
+            squareOfThisSize++;
+          } else {
+            j++;
+          }
+        }
+
+      }
     }
   }
 
+  function checkForSquare(startRow,startCol,squareSize,counter){
+    // console.log('this is array',array);
+    console.log('this is startRow',startRow);
+    console.log('this is startCol',startCol);
+    console.log('this is squareSize',squareSize);
+    console.log('this is array[startRow]',array[startRow]);
+      
+    if ( squareSize === 1 ) {
+      //if the left, right, and bottom pieces are in place
+      if ( array[startRow+squareSize][startCol] === '|' && 
+           array[startRow+squareSize][startCol+squareSize] === '|'&& 
+           array[startRow+2][startCol] === '_') {
+        counter++;
+        return counter;
+      }
+    }
+    
+    let topRight = array[startRow][startCol+squareSize-1] === '_';
+    let leftTop = array[startRow+squareSize-1][startCol] === '|';
+    console.log('array[startRow+2*squareSize-1]',array[startRow+2*squareSize-1]);
+    let leftBottom = array[startRow+2*squareSize-1][startCol] === '|';
+    let rightTop = array[startRow+1][startCol+squareSize-1] === '|';
+    let rightBottom = array[startRow+squareSize+1][startCol+squareSize] === '|';
+    let bottomLeft = array[startRow+2*squareSize][startCol] === '_';
+    let bottomRight = array[startRow+2*squareSize][startCol+squareSize-1] === '_';
+    
+    if ( topRight && leftTop && leftBottom && rightTop && 
+         rightBottom && bottomLeft && bottomRight ){
+      
+      if ( squareSize === 2 ) {
+        counter++;
+      } else {
+        //find all edges
+      }
+    }
+    return counter;
+
+  }
   return count;
 }
 
-// function squareDetector(array){
-//   let count = 0
-//   console.log(array);
-
-//   if ( array.length === 3 ) {
-//     if ( checkSquare(array,1) ) {
-//       count++;
-//       return count;
-//     }
-//   }
-
-//   // for ( let i = 0; i < array.length)
-
-//   function checkSquare(array,dimensions){
-//     if ( dimensions < 3 ) {
-//       if ( dimensions === 1 ) {
-//         let top = array[0][0];
-//         let left = array[1][0];
-//         let right = array[1][1];
-//         let bottom = array[2][0];
-
-//         console.log(top);
-//         console.log(left);
-//         console.log(right);
-//         console.log(bottom);
-
-//         if ( top && left && right && bottom ) {
-//           return true;
-//         }
-//       } else {
-//         let top1 = array[0][0];
-//         let top2 = array[0][1];
-//         let left1 = array[1][0];
-//         let left2 = array[3][0];
-//         let right1 = array[1][2];
-//         let right2 = array[3][2];
-//         let bottom1 = array[4][0];
-//         let bottom2 = array[4][1];
-
-//         if ( top1 && top2 && left1 && left2 && right1 && right2 && bottom1 && bottom2 ) {
-//           return true;
-//         }
-//       }
-
-//     } else {
-//       console.log('this is hard!');
-//     }
-    
-//     //perform check as-is
-
-//     //if dimensions >= 3
-//     //perform check as-is PLUS check for edges
-//   }
-//   return count;
-// }
-
-console.log(squareDetector(input1));
+// console.log(squareDetector(input1));
 // console.log(squareDetector(input2));
 // console.log(squareDetector(input3));
 // console.log(squareDetector(input4));
+console.log(squareDetector(input5));
+// console.log(squareDetector(input6));
