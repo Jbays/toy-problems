@@ -92,84 +92,143 @@ let input5 = [
 
 let input6 = [
   ['_','_','_'],
-  ['|','|','|'],
-  ['_','_'],
-  ['|','|','|'],
-  ['_','_'],
+  ['|','|','|','|'],
+  ['_','_','_'],
+  ['|','|','|','|'],
+  ['_','_','_'],
+  ['|','|','|','|'],
+  ['_','_','_'],
 ]
 
-
+let input7 = [
+  ['_','_','_','_'],
+  ['|','|','|','|','|'],
+  ['_','_','_','_'],
+  ['|','|','|','|','|'],
+  ['_','_','_','_'],
+  ['|','|','|','|','|'],
+  ['_','_','_','_'],
+  ['|','|','|','|','|'],
+  ['_','_','_','_'],
+]
 
 function squareDetector(array){
+  console.log(array);
   let count = 0;
 
-  for ( let i = 0; i < array.length; i=i+2 ) {
+  for ( let i = 0; i < array.length; i+=2 ) {
+    console.log(array[i]);
     for ( let j = 0; j < array[i].length; j++ ) {
-      let squareOfThisSize = 1;
-      let topLeftOfSquare = array[i][j];
-      let bottomArr = array[i+2*squareOfThisSize];
-      let futureArr = array[i+3*squareOfThisSize];
+      let topLeftCorner = array[i][j] === '_';
+      
+      for ( let k = 1; k <= array[i].length; k++ ) {
+        let bottomMostArr = Array.isArray(array[i+2*k]);
+        let topRightCorner = array[i][j+k-1] === '_';
 
-      //if top of square is defined && the array which SHOULD contain bottom of square is defined
-      if ( topLeftOfSquare === '_' && Array.isArray(bottomArr) ) {
-        while ( (squareOfThisSize+j) <= array[i].length ){
-          count = checkForSquare(i,j,squareOfThisSize,count);
-          
-          if ( Array.isArray(futureArr) ){
-            squareOfThisSize++;
-          } else {
-            j++;
-          }
+        if ( topLeftCorner && topRightCorner && bottomMostArr ) {
+          count = findSquare(i,j,k,count)
         }
 
       }
+
     }
   }
 
-  function checkForSquare(startRow,startCol,squareSize,counter){
-    // console.log('this is array',array);
-    console.log('this is startRow',startRow);
-    console.log('this is startCol',startCol);
-    console.log('this is squareSize',squareSize);
-    console.log('this is array[startRow]',array[startRow]);
-      
+  function findSquare(row,col,squareSize,counter){
+    let leftTopCorner = array[row+1][col] === '|';
+    let rightTopCorner = array[row+1][col+squareSize] === '|';
+    let bottomLeftCorner = array[row+2*squareSize][col] === '_';
+
+    // console.log('row',row)
+    // console.log('col',col)
+    // console.log('squareSize >>>',squareSize)
+    // console.log('counter',counter)
+    // console.log('leftTopCorner',leftTopCorner)
+    // console.log('rightTopCorner',rightTopCorner)
+    // console.log('bottomLeftCorner',bottomLeftCorner)
+
     if ( squareSize === 1 ) {
-      //if the left, right, and bottom pieces are in place
-      if ( array[startRow+squareSize][startCol] === '|' && 
-           array[startRow+squareSize][startCol+squareSize] === '|'&& 
-           array[startRow+2][startCol] === '_') {
+      if ( leftTopCorner && rightTopCorner && bottomLeftCorner ) {
         counter++;
         return counter;
       }
     }
-    
-    let topRight = array[startRow][startCol+squareSize-1] === '_';
-    let leftTop = array[startRow+squareSize-1][startCol] === '|';
-    console.log('array[startRow+2*squareSize-1]',array[startRow+2*squareSize-1]);
-    let leftBottom = array[startRow+2*squareSize-1][startCol] === '|';
-    let rightTop = array[startRow+1][startCol+squareSize-1] === '|';
-    let rightBottom = array[startRow+squareSize+1][startCol+squareSize] === '|';
-    let bottomLeft = array[startRow+2*squareSize][startCol] === '_';
-    let bottomRight = array[startRow+2*squareSize][startCol+squareSize-1] === '_';
-    
-    if ( topRight && leftTop && leftBottom && rightTop && 
-         rightBottom && bottomLeft && bottomRight ){
-      
-      if ( squareSize === 2 ) {
+
+    let leftBottomCorner = array[row+2*squareSize-1][col];
+    let rightBottomCorner = array[row+2*squareSize-1][col+squareSize];
+    let bottomRightCorner = array[row+2*squareSize][col+squareSize-1];
+
+    if ( squareSize === 2 ) {
+      if ( leftTopCorner && rightTopCorner && bottomLeftCorner && leftBottomCorner && rightBottomCorner && bottomRightCorner ){
         counter++;
-      } else {
-        //find all edges
+        return counter;
       }
     }
-    return counter;
 
+    if ( squareSize === 3 ) {
+      let topEdge = array[row][col+1] === '_';
+      let bottomEdge = array[row+2*squareSize][col+1] === '_';
+      let leftEdge = array[row+1][col] === '|';
+      let rightEdge = array[row+1][col+1] === '|';
+
+      if ( topEdge && bottomEdge && leftEdge && rightEdge ) {
+        counter++;
+        return counter;  
+      }
+    } 
+
+    if ( squareSize > 3 ) {
+      console.log('bigger boat!');
+
+      // if ( findEdges(array,row,col,squareSize) ) {
+      //   counter++;
+      // }
+
+      return counter;
+
+  
+      function findEdges(inputArray,inputRow,inputCol,inputSqSize,counter){
+        let firstArr = inputArray.shift();
+        firstArr.shift();
+        firstArr.pop();
+        let lastArr = inputArray.pop();
+        lastArr.shift();
+        lastArr.pop();
+
+        for ( let l = 0; l < firstArr.length; l++ ) {
+          if ( firstArr[l] !== '_' || lastArr[l] !== '_' ){
+            return false;
+          }
+        }
+
+        for ( let l = 0; l < inputArray.length; l++ ) {
+          let first = inputArray[l].shift();
+          let last = inputArray[l].pop();
+
+          if ( first !== '|' || last !== '|' ) {
+            return false;
+          }
+        }
+
+        return true;
+      }
+
+    }
+    
+    return counter;
   }
+
   return count;
 }
 
-// console.log(squareDetector(input1));
+
+
 // console.log(squareDetector(input2));
 // console.log(squareDetector(input3));
 // console.log(squareDetector(input4));
-console.log(squareDetector(input5));
-// console.log(squareDetector(input6));
+
+// console.log('1x1 trival works: ',squareDetector(input1)===1);
+// console.log('2x2 trivial works: ',squareDetector(input5)===5);
+// console.log('2x2 trivial works: ',squareDetector(input5));
+// console.log('3x3 trivial works: ',squareDetector(input6));
+console.log(squareDetector(input7));
