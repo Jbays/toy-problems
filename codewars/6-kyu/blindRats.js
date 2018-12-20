@@ -27,8 +27,11 @@ function countDeafRats(town){
   let blindRatCount = 0;
 
   town = town.replace(/ /g,'').split('P');
+  //re-orient the rats
   town[0] = town[0].split('').reverse().join('');
+  console.log('town>>>',town);
   town = town.join('')
+  console.log('town>>>!!!',town);
 
   for ( let i = 0; i < town.length; i+=2 ) {
     if ( town[i] === '~' && town[i+1] === 'O' ) {
