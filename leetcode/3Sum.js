@@ -73,6 +73,65 @@
 //   // console.log('array',array);
 // }
 
+const _ = require('lodash');
+
+function threeSum(array){
+  if ( array.length < 3 ) { return [] };
+  array = array.sort((a,b)=>{return a-b});
+
+  let output = [];
+  let foundSums = {};
+
+  console.log(array);
+
+  for ( let i = 0; i < array.length; i++ ) {
+    for ( let j = 1; j < array.length; j++ ) {
+      //this should remove dups
+      if ( i === j ) {
+        j++
+      } else {
+        if ( !foundSums[array[i]+array[j]] ) {
+          foundSums[array[i] + array[j]] = [[array[i],array[j]]];
+        } else {
+          //if the array is unique, add to array of arrays
+          let intersection = checkForIntersections(foundSums,array[i]+array[j],[array[i],array[j]]);
+
+          if ( intersection ){
+            foundSums[array[i] + array[j]].push([array[i],array[j]]);
+          }
+        }
+      }
+    }
+  }
+
+  
+  for ( let sum in foundSums ) {
+    for ( let i = 0; i < foundSums[sum].length; i++ ) {
+      console.log('foundSums[sum][i]',foundSums[sum][i]);
+      
+      for ( let j = 0; j < array.length; j++ ) {
+        console.log(array[j]);
+          if ( Number(sum) + array[j] === 0 ) {
+              foundSums[sum].push(array[j]);
+              output.push(foundSums[sum]);
+          }  
+      }
+    }
+        
+  }
+  function checkForIntersections(object,sum,array){
+    for ( let i = 0; i < object[sum].length; i++ ) {
+      if ( _.intersection(object[sum][i],array).length >= 2 ) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  console.log(foundSums)
+  return output;
+}
+
 let input1 = [-1, 0, 1, 2, -1, -4]
 //solutions 
 console.log(threeSum(input1));
