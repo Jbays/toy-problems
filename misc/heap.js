@@ -27,27 +27,32 @@ class Heap{
     }
   }
 
-  bubbleDown(index){
-    while ( true ) {
-      let child = (index+1)*2;
-      let sibling = child-1;
-      let toSwap = null
-
-      //if current is greater than child
-      if (this.maxHeap[index] > this.maxHeap[child] ) {
-        toSwap = child;
+  bubbleDown(index,level){
+    let leftChild = (index*level*2)+1;
+    let rightChild = (index*level*2)+2;
+    let leftIsLargestChild = false;
+    
+    //is left or right larger?
+    if ( this.maxHeap[leftChild] > this.maxHeap[rightChild] ) {
+      leftIsLargestChild = true;
+    }
+    
+    //find the biggest child
+    //iterate down that branch
+    if ( leftIsLargestChild ) {
+      if ( this.maxHeap[index] < this.maxHeap[leftChild] ){
+        let temp = this.maxHeap[leftChild];
+        this.maxHeap[leftChild] = this.maxHeap[index];
+        this.maxHeap[index] = temp;
+        return this.bubbleDown(leftChild,++level);  
       }
-
-      //if current is larger than sibling && ( child is null OR child is BOTH not null and sibling is greater than child )
-      if (this.maxHeap[index] > this.maxHeap[sibling] && (this.maxHeap[child] == null || (this.maxHeap[child] !== null && this.maxHeap[sibling] < this.maxHeap[child]))) {
-        toSwap = sibling;
+    } else {
+      if ( this.maxHeap[index] < this.maxHeap[rightChild] ){
+        let temp = this.maxHeap[rightChild];
+        this.maxHeap[rightChild] = this.maxHeap[index];
+        this.maxHeap[index] = temp;
+        return this.bubbleDown(rightChild,++level);  
       }
-
-      if ( toSwap === null ) {
-        break;
-      }
-
-      index = toSwap;
     }
   }
 
@@ -55,7 +60,7 @@ class Heap{
     let max = this.maxHeap[0];
 
     this.maxHeap[0] = this.maxHeap.pop();
-    this.bubbleDown(0);
+    this.bubbleDown(0,0);
 
     return max;
   }
@@ -64,12 +69,15 @@ class Heap{
 let myHeap = new Heap();
 
 for ( let i = 0; i < input1.length; i++ ) {
-// for ( let i = 0; i < 4; i++ ) {
   myHeap.insertNode(input1[i]);  
 }
 
 let max = myHeap.extractMax();
 console.log('this is max',max);
+// console.log(myHeap.extractMax())
+// console.log(myHeap.extractMax())
+// console.log(myHeap.extractMax())
+// console.log(myHeap.extractMax())
 
 console.log(myHeap);
 
