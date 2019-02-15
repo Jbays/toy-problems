@@ -21,71 +21,148 @@
 
 function spiralMatrix(num){
   let output = makeEmptyMatrix(num);
-  let matrixCoordinates = generateSpiralCoords(num);
-
-  console.log('matrixCoordinates',matrixCoordinates)
-
-  function generateSpiralCoords(number){
-    let output = outermostCoordinateMapping(0,number,number-1,[]);
-    
-    function outermostCoordinateMapping(rowStart,rowLength,totalCalls,array){
-      if ( totalCalls === 1 ) {
-        // array.push([rowStart,rowStart])
-        return array;
-      }
-
-      
-      let row = rowStart;
-      let col = rowStart;
-      
-      array.push([row,col]);
-
-      console.log('rowStart',rowStart);
-      console.log('rowLength',rowLength);
-      console.log('this is array',array);
-      
-      while ( col < rowLength-1 ) {
-        col++;
-        array.push([row,col])
-      }
-
-      while ( row < rowLength-1 ) {
-        row++;
-        array.push([row,col]);
-      }
-
-      while ( col > rowStart ){
-        col--;
-        array.push([row,col]);
-      }
-
-      while ( row > rowStart+1 ) {
-        row--;
-        array.push([row,col]);
-      }
-
-      rowStart++;
-      totalCalls--;
-      rowLength-=2;
-      return outermostCoordinateMapping(rowStart,rowLength,totalCalls,array);
-    }
+  let calls = (num <= 1 ) ? 1 : Math.ceil(num/2);
+  let coordinates = returnTupleShell(0,calls,num,[]);
   
-    return output;
+  console.log('these are your coordinates',coordinates);
+
+  for ( let i = 0; i < coordinates.length; i++ ) {
+    let row = coordinates[i][0];
+    let col = coordinates[i][1];
+
+    output[row][col] = i+1;
+  }
+
+  return output;
+
+  function returnTupleShell(rowStart,totalRecursiveCalls,rowLength,containerArr){
+    if ( totalRecursiveCalls <= 0 ) {
+      return containerArr;
+    }
+    
+    let row = rowStart;
+    let col = rowStart;
+    containerArr.push([row,col]);
+    
+    while ( col < rowLength-1 ) {
+      col++;
+      containerArr.push([row,col]);
+    }
+    
+    while ( row < rowLength-1 ) {
+      row++;
+      containerArr.push([row,col]);
+    }
+    
+    while ( col > rowStart ) {
+      col--;
+      containerArr.push([row,col]);
+    }
+    
+    while ( row-1 > rowStart ) {
+      row--;
+      containerArr.push([row,col]);
+    };
+
+    totalRecursiveCalls--;
+    rowLength-=2;
+    rowStart++;
+    return returnTupleShell(rowStart,totalRecursiveCalls,rowLength,containerArr);
   }
 
   function makeEmptyMatrix(number){
     let output = [];
-    for ( let i = 0; i < number; i++ ){
+    for ( let i = 0; i < number; i++ ) {
       let temp = [];
-      for ( let j = 0; j < number; j++ ){
+      for ( let j = 0; j < number; j++ ) {
         temp.push(undefined);
       }
       output.push(temp);
     }
     return output;
   }
-  return output;
 }
+
+// function spiralMatrix(num){
+//   let output = makeEmptyMatrix(num);
+//   let matrixCoordinates = generateSpiralCoords(num);
+
+    
+//   console.log('matrixCoordinates',matrixCoordinates)
+
+//   function generateSpiralCoords(number){
+//     let output = outermostCoordinateMapping(1,2,[ [ 0, 0 ],
+//       [ 0, 1 ],
+//       [ 0, 2 ],
+//       [ 0, 3 ],
+//       [ 1, 3 ],
+//       [ 2, 3 ],
+//       [ 3, 3 ],
+//       [ 3, 2 ],
+//       [ 3, 1 ],
+//       [ 3, 0 ],
+//       [ 2, 0 ],
+//       [ 1, 0 ]]);
+//     // let output = outermostCoordinateMapping(0,number,number-1,[]);
+    
+//       // console.log('output',output);
+
+//     function outermostCoordinateMapping(rowStart,rowLength,array){
+//       let row = rowStart;
+//       let col = rowStart;
+
+//       if ( rowLength <= 0 ) {
+//         return array;
+//       }
+
+//       array.push([row,col]);
+      
+//       console.log('rowStart',rowStart);
+//       console.log('rowLength',rowLength);
+//       console.log('this is array',array);
+      
+//       while ( col < rowLength-1 ) {
+//         col++;
+//         array.push([row,col])
+//       }
+
+//       while ( row < rowLength-1 ) {
+//         row++;
+//         array.push([row,col]);
+//       }
+
+//       while ( col > rowStart ){
+//         col--;
+//         array.push([row,col]);
+//       }
+
+//       while ( row > rowStart+1 ) {
+//         row--;
+//         array.push([row,col]);
+//       }
+
+//       rowStart++;
+//       rowLength-=2;
+//       return outermostCoordinateMapping(rowStart,rowLength,array);
+//     }
+  
+//     return output;
+//   }
+
+//   function makeEmptyMatrix(number){
+//     let output = [];
+//     for ( let i = 0; i < number; i++ ){
+//       let temp = [];
+//       for ( let j = 0; j < number; j++ ){
+//         temp.push(undefined);
+//       }
+//       output.push(temp);
+//     }
+//     return output;
+//   }
+//   return output;
+// }
 
 // console.log(spiralMatrix(3));
 console.log(spiralMatrix(4));
+// console.log(spiralMatrix(5));
