@@ -79,17 +79,19 @@ function characterFrequency(string){
     }
   }
 
-  let output = Object.entries(recordKeeper);
+  // let output = Object.entries(recordKeeper);
 
-  output.sort((a,b)=>{
-    if ( a[1] !== b[1] ) {
-      return b[1] - a[1];
-    } else {
-      return a[0].localeCompare(b[0]);
-    }
-  })
+  // output.sort((a,b)=>{
+  //   if ( a[1] !== b[1] ) {
+  //     return b[1] - a[1];
+  //   } else {
+  //     return a[0].localeCompare(b[0]);
+  //   }
+  // })
 
-  return output;
+  return Object.entries(recordKeeper).sort((a,b)=>{
+    return b[1] - a[1] || a[0].localeCompare(b[0]);
+  });
 }
 
 
