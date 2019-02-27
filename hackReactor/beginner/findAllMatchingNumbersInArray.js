@@ -16,14 +16,28 @@ Basic Set 2.2: Finding all matching numbers in an array
       [ 10, 20, 30 ]
 */
 
-function findEven(numbers) {
-  let output = [];
+// function findEven(numbers) {
+//   let output = [];
 
-  for ( let i = 0; i < numbers.length; i++ ) {
-    if ( numbers[i] % 2=== 0 ) {
-      output.push(numbers[i])
+//   for ( let i = 0; i < numbers.length; i++ ) {
+//     if ( numbers[i] % 2=== 0 ) {
+//       output.push(numbers[i])
+//     }
+//   }
+
+//   return output;
+// }
+
+function findEven(numbers,n=numbers.length,output=[]){
+  if ( n > 0 ) {
+    let popped = numbers.pop();
+    if ( popped % 2 === 0 ) {
+      output.unshift(popped)
     }
+    return findEven(numbers,numbers.length,output);
   }
 
   return output;
 }
+
+console.log(findEven([10, 20, 25, 30],4,[]));
