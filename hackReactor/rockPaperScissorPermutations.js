@@ -41,6 +41,10 @@
 //   return results;
 // }
 
+//time complexity = O(r*n)
+//where r is # of rounds, n is the length of output
+//space complexity = O(3^r)
+//where r is # of rounds.
 function rockPaperPermutation(rounds,output=[]){
   const options = ['r','p','s'];
   
@@ -60,7 +64,7 @@ function rockPaperPermutation(rounds,output=[]){
   return rockPaperPermutation(--rounds,temp);
 }
 
-console.log(rockPaperPermutation(0));
-console.log(rockPaperPermutation(1));
-console.log(rockPaperPermutation(2));
-console.log(rockPaperPermutation(3));
+// console.log(rockPaperPermutation(0));
+// console.log(rockPaperPermutation(1));
+// console.log(rockPaperPermutation(2));
+// console.log(rockPaperPermutation(3));
