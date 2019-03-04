@@ -129,32 +129,41 @@ class LinkedList{
   contains(value){
     return !!this.listOfAllVals[value];
   }
+
+  reverse(){
+    let containerArr = [];
+
+    while (this.head){
+      containerArr.unshift(this.head.value);
+      this.removeHead();
+    }
+
+    let firstUp = containerArr.shift();
+    let newLinkedList = new LinkedList(firstUp);
+    
+    for ( let i = 0; i < containerArr.length; i++ ) {
+      newLinkedList.addToTail(containerArr[i]);
+    }
+
+    return newLinkedList;
+  }
 }
 
-let myLinkedList = new LinkedList(4);
-myLinkedList.addToTail(5);
-console.log(myLinkedList.contains(4));
-console.log(myLinkedList.contains(5));
-console.log(myLinkedList.contains(6));
+// let myLinkedList = new LinkedList(4);
+// myLinkedList.addToTail(5);
+// console.log(myLinkedList.contains(4));
+// console.log(myLinkedList.contains(5));
+// console.log(myLinkedList.contains(6));
 
 
-// let myLinkedList = new LinkedList(5);
-// myLinkedList.addToTail(8);
-// myLinkedList.addToTail(10);
-// myLinkedList.addToTail(12);
-// myLinkedList.removeHead();
-// myLinkedList.removeHead();
-// myLinkedList.removeHead();
+let myLinkedList = new LinkedList(5);
+myLinkedList.addToTail(8);
+myLinkedList.addToTail(10);
+myLinkedList.addToTail(12);
+myLinkedList.removeHead();
+
+let reversed = myLinkedList.reverse();
 // myLinkedList.removeHead();
 
 console.log('printout>>>',JSON.stringify(myLinkedList,null,2));
-// console.log(myLinkedList);
-
-// class LinkedList {
-//   constructor(value){
-//     this.value = value;
-//     this.next = null;
-//   }
-
-
-// }
+console.log('printout>>>',JSON.stringify(reversed,null,2));
