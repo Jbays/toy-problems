@@ -41,10 +41,7 @@ function shuffleDeck(deckOfCards){
     let randomNum = parseInt(Math.random()*deckOfCards.length);
     let randomCard = deckOfCards[randomNum];
     
-    // deckOfCards = deckOfCards.slice(0,randomNum).concat(deckOfCards.slice(randomNum+1));
-    // console.log('deckOfCards',deckOfCards)
     deckOfCards.splice(randomNum,1);
-    // console.log('deckOfCards >>>',deckOfCards)
 
     shuffled.push(randomCard);
   }
@@ -52,4 +49,4 @@ function shuffleDeck(deckOfCards){
   return shuffled
 }
 
-console.log(shuffleDeck(deck));
+// console.log(shuffleDeck(deck));
