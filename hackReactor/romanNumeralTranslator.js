@@ -49,37 +49,68 @@ const DIGIT_VALUES = {
 };
 
 function translateRomanNumeral(romanNumeral){
-  if ( romanNumeral === '' ) { return 0 };
+  let output = 0;
+  if (romanNumeral === '') { return output };
   if ( romanNumeral && !DIGIT_VALUES[romanNumeral[0]] ) {
     return null
   }
 
-  console.log('romanNumeral.split("")',romanNumeral.split(''))
-
   let mapped = romanNumeral.split('').map((char)=>{
-    return DIGIT_VALUES[char];
-  }).reduce((acc,curr,index,srcArr)=>{
-    console.log('acc',acc)
-    console.log('curr',curr)
-    if ( srcArr[index] < srcArr[index+1] ) {
-      return acc-curr;
+      return DIGIT_VALUES[char];
+    })
+
+
+  for ( let i = 0; i < mapped.length; i++ ) {
+    let prev = mapped[i-1];
+    let curr = mapped[i];
+    let next = mapped[i+1];
+
+    if ( curr < prev && curr < next || !prev && curr < next ) {
+      output -= curr;
+    } else {
+      output += curr;
     }
-    return acc+curr;
-  })
 
-  return mapped;
+    // console.log('output',output);
+    
+    // if ( prev < mapped[i] ) {
+    //   output += mapped[i];
+    // } else {
+    //   output -= mapped[i];
+    // }
+    // console.log('output',output);
+  }
 
-  console.log('this is mapped',mapped);
-
-  // romanNumeral.split('')
-
-  // let mapped = romanNumeral.map((character)=>{
-
-  // })
+  return output;
+  // return Math.abs(output);
+    
+    
+    // .reduce((acc,curr,index,srcArr)=>{
+    //   console.log('acc',acc)
+    //   console.log('curr',curr)
+    //   if ( srcArr[index] < srcArr[index+1] ) {
+    //     return acc-curr;
+    //   }
+    //   return acc+curr;
+    // })
 
 }
 
 // console.log(translateRomanNumeral('LX'));
+// console.log(translateRomanNumeral('MCM'));
+// console.log(translateRomanNumeral('XV'));
+// console.log(translateRomanNumeral('MCMX'));
+// console.log(translateRomanNumeral('X'));
+// console.log(translateRomanNumeral('MCMLIV'));
+
+// console.log(translateRomanNumeral('VI'));
+// console.log(translateRomanNumeral('MCMXC'));
+// console.log(translateRomanNumeral('MDCCCCX'));
+// console.log(translateRomanNumeral('XIV'));
+// console.log(translateRomanNumeral('M'));
+// console.log(translateRomanNumeral('MMVIII'));
+// console.log(translateRomanNumeral('II'));
+// console.log(translateRomanNumeral('VII'));
 console.log(translateRomanNumeral('IV'));
 // console.log(translateRomanNumeral('horse'));
 // console.log(translateRomanNumeral(''));
