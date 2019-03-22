@@ -48,52 +48,53 @@ const DIGIT_VALUES = {
   M: 1000
 };
 
+// function translateRomanNumeral(romanNumeral){
+//   let output = 0;
+//   if (romanNumeral === '') { return output };
+//   if ( romanNumeral && !DIGIT_VALUES[romanNumeral[0]] ) {
+//     return null
+//   }
+
+//   let mapped = romanNumeral.split('').map((char)=>{
+//       return DIGIT_VALUES[char];
+//     })
+
+//   for ( let i = 0; i < mapped.length; i++ ) {
+//     let prev = mapped[i-1];
+//     let curr = mapped[i];
+//     let next = mapped[i+1];
+
+//     if ( curr < prev && curr < next || !prev && curr < next ) {
+//       output -= curr;
+//     } else {
+//       output += curr;
+//     }
+//   }
+
+//   return output;
+    
+//     // .reduce((acc,curr,index,srcArr)=>{
+//     //   console.log('acc',acc)
+//     //   console.log('curr',curr)
+//     //   if ( srcArr[index] < srcArr[index+1] ) {
+//     //     return acc-curr;
+//     //   }
+//     //   return acc+curr;
+//     // })
+
+// }
+
 function translateRomanNumeral(romanNumeral){
-  let output = 0;
-  if (romanNumeral === '') { return output };
-  if ( romanNumeral && !DIGIT_VALUES[romanNumeral[0]] ) {
-    return null
-  }
+  if (romanNumeral === '') { return 0 };
 
-  let mapped = romanNumeral.split('').map((char)=>{
-      return DIGIT_VALUES[char];
-    })
-
-
-  for ( let i = 0; i < mapped.length; i++ ) {
-    let prev = mapped[i-1];
-    let curr = mapped[i];
-    let next = mapped[i+1];
-
-    if ( curr < prev && curr < next || !prev && curr < next ) {
-      output -= curr;
-    } else {
-      output += curr;
-    }
-
-    // console.log('output',output);
-    
-    // if ( prev < mapped[i] ) {
-    //   output += mapped[i];
-    // } else {
-    //   output -= mapped[i];
-    // }
-    // console.log('output',output);
-  }
-
-  return output;
-  // return Math.abs(output);
-    
-    
-    // .reduce((acc,curr,index,srcArr)=>{
-    //   console.log('acc',acc)
-    //   console.log('curr',curr)
-    //   if ( srcArr[index] < srcArr[index+1] ) {
-    //     return acc-curr;
-    //   }
-    //   return acc+curr;
-    // })
-
+  return romanNumeral.split('').map((char)=>{
+    return DIGIT_VALUES[char];
+  }).reduce((acc,curr,index,srcArr)=>{
+    if ( curr < srcArr[index-1] && curr < srcArr[index+1] || !srcArr[index-1] && curr < srcArr[index+1] ){
+      return acc-curr;
+    } 
+    return acc+curr;
+  },0) || 'null';
 }
 
 // console.log(translateRomanNumeral('LX'));
