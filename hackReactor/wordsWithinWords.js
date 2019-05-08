@@ -10,6 +10,9 @@
 
 */
 
+//time  complexity is O(n*(n-1)) --> O(n^2)
+////where n is the length of the wordList array
+//space complexity is O(1)
 function nestedWordCount(wordList){
   let sortedWordList = wordList.sort((a,b)=>{return b.length-a.length});
 
