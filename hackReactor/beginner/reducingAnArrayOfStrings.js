@@ -31,3 +31,4 @@ function concatStrings(strings) {
 
   return concatMe;
 }
+console.log(concatStrings(['a','b','c']) //=> 'abc';
