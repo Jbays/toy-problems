@@ -4,7 +4,7 @@
   "description": "Here I will add toy problems in JavaScript.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -19,5 +19,9 @@
   "homepage": "https://github.com/Jbays/toy-problems#readme",
   "dependencies": {
     "lodash": "^4.17.11"
+  },
+  "devDependencies": {
+    "jest": "^27.0.6",
+    "test": "^0.6.0"
   }
 }

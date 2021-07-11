@@ -26,5 +26,4 @@ function SumOfThreeAndFive(num){
   return sum;
 }
 
-console.log('SumOfThreeAndFive(10) should equal 23:', SumOfThreeAndFive(10));
-console.log('SumOfThreeAndFive(1000) should equal 233168:', SumOfThreeAndFive(1000));
+module.exports = SumOfThreeAndFive;
